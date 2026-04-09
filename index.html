@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>游戏机器码解码 - PC游戏一键解码自助/远程服务商城</title>
-    <meta name="keywords" content="机器码解码,PC游戏解码,一键解码,远程解码,游戏机器码解除,游戏破解,机器码解除">
+    <meta name="keywords" content="机器码解码,PC游戏解码,一键解码,远程解码,游戏机器码解除,机器码解除">
     <meta name="description" content="专业游戏机器码解码服务，支持全PC游戏自助一键解码、人工远程协助，安全稳定，快速生效，包过重装系统。">
     <meta name="robots" content="index,follow">
+    <!-- 预加载核心样式和图片 -->
+    <link rel="preconnect" href="https://6664321.github.io">
     <style>
         /* 全局样式重置 */
         * {
@@ -24,9 +26,10 @@
             padding-bottom: 80px; /* 给底部联系方式留空间 */
             position: relative;
             overflow-x: hidden;
+            line-height: 1.5;
         }
 
-        /* 动态背景动画 */
+        /* 动态背景动画 - 优化性能 */
         body::before {
             content: "";
             position: fixed;
@@ -38,6 +41,7 @@
             animation: cyberpunkBG 30s linear infinite;
             z-index: -1;
             transform: translate(-50%, -50%);
+            pointer-events: none; /* 避免遮挡交互 */
         }
 
         @keyframes cyberpunkBG {
@@ -48,7 +52,7 @@
         /* 1. 顶部视觉头图区 */
         .banner {
             width: 100%;
-            padding: 40px 20px;
+            padding: clamp(20px, 5vw, 40px) 20px; /* 响应式内边距 */
             text-align: center;
             background: linear-gradient(90deg, #110022, #001133);
             border-bottom: 3px solid #ff00ff;
@@ -57,14 +61,14 @@
         }
 
         .banner h1 {
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 4vw, 2.5rem); /* 响应式字体 */
             color: #00ffff;
             text-shadow: 0 0 10px #00ffff, 0 0 20px #ff00ff;
             margin-bottom: 10px;
         }
 
         .banner p {
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 2vw, 1.2rem);
             color: #ffffff;
             opacity: 0.8;
         }
@@ -81,7 +85,7 @@
         }
 
         .intro p {
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 2vw, 1.1rem);
             line-height: 1.8;
             color: #ffffff;
             text-align: center;
@@ -96,7 +100,7 @@
 
         .product-title {
             text-align: center;
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 3vw, 2rem);
             color: #ff00ff;
             text-shadow: 0 0 10px #ff00ff;
             margin-bottom: 30px;
@@ -109,7 +113,7 @@
 
         .product-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(clamp(300px, 100%, 400px), 1fr)); /* 优化移动端最小宽度 */
             gap: 30px;
         }
 
@@ -120,15 +124,18 @@
             border: 2px solid #ff00ff;
             box-shadow: 0 0 20px #ff00ff44;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
+        /* 卡片悬浮动效增强 */
         .product-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.02); /* 轻微缩放+上移 */
             box-shadow: 0 0 30px #ff00ff88;
         }
 
         .product-name {
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
             color: #00ffff;
             margin-bottom: 15px;
             border-bottom: 1px solid #00ffff;
@@ -136,7 +143,7 @@
         }
 
         .product-price {
-            font-size: 1.8rem;
+            font-size: clamp(1.5rem, 3vw, 1.8rem);
             color: #ff00ff;
             margin-bottom: 20px;
             font-weight: bold;
@@ -145,12 +152,23 @@
         .product-stock {
             color: #00ff00;
             margin-bottom: 20px;
+            font-size: 1rem;
         }
 
         .product-detail {
             margin: 20px 0;
             line-height: 1.8;
             color: #ffffffdd;
+            font-size: 0.95rem;
+            transition: all 0.3s ease; /* 折叠/展开动画 */
+            max-height: 1000px; /* 展开高度 */
+            overflow: hidden;
+        }
+
+        /* 详情折叠状态 */
+        .product-detail.collapsed {
+            max-height: 80px;
+            overflow: hidden;
         }
 
         .product-detail img {
@@ -160,12 +178,22 @@
             border-radius: 8px;
             border: 2px solid #ff00ff;
             box-shadow: 0 0 15px #ff00ff55;
+            transition: all 0.3s ease;
+        }
+
+        .product-detail img:hover {
+            transform: scale(1.01);
+            box-shadow: 0 0 20px #ff00ff99;
         }
 
         /* 第二个商品图片样式区分 */
         .product-list > div:nth-child(2) .product-detail img {
             border-color: #00ffff;
             box-shadow: 0 0 15px #00ffff55;
+        }
+
+        .product-list > div:nth-child(2) .product-detail img:hover {
+            box-shadow: 0 0 20px #00ffff99;
         }
 
         .product-btn {
@@ -179,9 +207,31 @@
             padding: 12px 0;
             border: none;
             border-radius: 8px;
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 2vw, 1.1rem);
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 按钮点击波纹效果 */
+        .btn::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .btn:active::after {
+            width: 300px;
+            height: 300px;
+            opacity: 0;
         }
 
         .btn-detail {
@@ -192,7 +242,7 @@
 
         .btn-detail:hover {
             background: #00cccc;
-            box-shadow: 0 0 10px #00ffff;
+            box-shadow: 0 0 15px #00ffff;
         }
 
         .btn-buy {
@@ -203,7 +253,7 @@
 
         .btn-buy:hover {
             background: #cc00cc;
-            box-shadow: 0 0 10px #ff00ff;
+            box-shadow: 0 0 15px #ff00ff;
         }
 
         /* 4. 用户信任区 */
@@ -215,7 +265,7 @@
 
         .trust-title {
             text-align: center;
-            font-size: 1.8rem;
+            font-size: clamp(1.5rem, 3vw, 1.8rem);
             color: #00ffff;
             text-shadow: 0 0 10px #00ffff;
             margin-bottom: 25px;
@@ -223,7 +273,7 @@
 
         .trust-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(clamp(300px, 100%, 500px), 1fr));
             gap: 20px;
         }
 
@@ -232,12 +282,18 @@
             padding: 20px;
             border-radius: 10px;
             border: 2px solid #00ffff;
+            transition: all 0.3s ease;
+        }
+
+        .trust-item:hover {
+            box-shadow: 0 0 20px #00ffff77;
         }
 
         .trust-item p {
             margin-bottom: 15px;
             color: #ffffffdd;
             line-height: 1.6;
+            font-size: 0.95rem;
         }
 
         /* 5. 购买须知区 */
@@ -252,7 +308,7 @@
         }
 
         .notice-title {
-            font-size: 1.8rem;
+            font-size: clamp(1.5rem, 3vw, 1.8rem);
             color: #ff00ff;
             text-align: center;
             margin-bottom: 20px;
@@ -263,12 +319,19 @@
             list-style: none;
             line-height: 2;
             color: #ffffffdd;
+            font-size: 0.95rem;
         }
 
         .notice-list li {
             margin-bottom: 10px;
             padding-left: 20px;
             position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .notice-list li:hover {
+            padding-left: 25px;
+            color: #ffffff;
         }
 
         .notice-list li::before {
@@ -289,85 +352,139 @@
             border-top: 2px solid #00ffff;
             text-align: center;
             z-index: 999;
+            backdrop-filter: blur(5px); /* 毛玻璃效果 */
         }
 
         .footer p {
             color: #ffffff;
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 2vw, 1.1rem);
         }
 
         .footer span {
             color: #ff00ff;
             font-weight: bold;
+            text-shadow: 0 0 5px #ff00ff;
         }
 
-        /* 移动端适配 */
+        /* 移动端适配增强 */
         @media (max-width: 768px) {
-            .banner h1 {
-                font-size: 1.8rem;
-            }
-            .product-list {
-                grid-template-columns: 1fr;
-            }
-            .trust-content {
-                grid-template-columns: 1fr;
+            .banner {
+                padding: 20px 15px;
             }
             .product-card {
-                padding: 20px;
+                padding: 20px 15px;
             }
+            .product-btn {
+                flex-direction: column; /* 移动端按钮垂直排列 */
+                gap: 10px;
+            }
+            .intro, .notice {
+                padding: 15px;
+            }
+            .trust-item {
+                padding: 15px;
+            }
+            /* 移动端底部适配，避免内容被遮挡 */
+            body {
+                padding-bottom: 100px;
+            }
+            .footer {
+                padding: 15px 10px;
+            }
+            .footer p {
+                line-height: 1.4;
+            }
+        }
+
+        /* 加载动画 */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1a002e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading::after {
+            content: "";
+            width: 50px;
+            height: 50px;
+            border: 3px solid #ff00ff;
+            border-top-color: #00ffff;
+            border-radius: 50%;
+            animation: loading 1s linear infinite;
+        }
+
+        @keyframes loading {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
+    <!-- 页面加载动画 -->
+    <div class="loading" id="loading"></div>
+
     <!-- 1. 顶部视觉头图区 -->
-    <div class="banner">
+    <header class="banner">
         <h1>🔥 游戏机器码解码服务 🔥</h1>
         <p>全PC游戏一键解码 | 人工远程协助 | 稳定不翻车 </p>
-    </div>
+    </header>
 
     <!-- 2. 核心服务简介区 -->
-    <div class="intro">
+    <section class="intro">
         <p>专业解决各类PC游戏机器码限制问题，自解版35元一键解码无需人工，远程版70元一对一协助包成功，解码后一直稳定，已服务上千用户，口碑保障！</p>
-    </div>
+    </section>
 
     <!-- 3. 商品展示区（核心板块） -->
-    <div class="product-container">
+    <section class="product-container">
         <h2 class="product-title">🎮 核心服务套餐</h2>
         <div class="product-list">
             <!-- 第一个商品：自解版 -->
-            <div class="product-card">
+            <article class="product-card">
                 <h3 class="product-name">自解版解码服务</h3>
                 <div class="product-price">¥ 35.00</div>
-                <div class="product-stock">库存：一般</div>
-                <div class="product-detail">
+                <div class="product-stock">库存：充足</div>
+                <div class="product-detail collapsed">
                     <p>✅ （有详细视频教程）只提供软件和卡密（通解所有pc-游戏）【静态和动态码自己可调】</p>
-                    <p>✅ 纯小白，如果解码流程和视频一点都看不明白，下单旁边的70【客服远程包过】。
-自解失败的【补差价】联系旁边的代解客服</p>
+                    <p>✅ 纯小白，如果解码流程和视频一点都看不明白，下单旁边的70【客服远程包过】。自解失败的【补差价】联系旁边的代解客服</p>
                     <p>✅ 【招代理，批量拿卡优惠已开启】</p>
-                    <p> ①：本程序为自助解码 非远程人工﻿解码 (卡密售出不退，确认需要后购买)，只保证卡密正确,按照视频教程解码,百分之99都可以解除！</p>
+                    <p> ①：本程序为自助解码 非远程人工解码 (卡密售出不退，确认需要后购买)，只保证卡密正确,按照视频教程解码,百分之99都可以解除！</p>
                     <p> ②：卡密绑定电脑不重装一直可以用，必须重装分区后使用，支持所有电脑PC端的Game，支持任何电脑都可以解除机器码</p>
                     <p>✅ 【全新版本过加密，过AC-E，过延迟,过反弹,过365/1/3/7,1小时，1分钟，数据异常】</p>
                     <p> ③：解码流程：</p>
-                    <p>✅ 重做系统，装驱动，禁更新，禁杀du，装库，关闭内核隔离，然后登录解码软件解码，解码成功，装软件，登录账号正常玩就行（部分需要配合自定义设置）【解码之后，驱动系统以及其他的不要动，其他的不要动】</p>
+                    <p>✅ 重做系统，装驱动，禁更新，禁杀毒，装库，关闭内核隔离，然后登录解码软件解码，解码成功，装软件，登录账号正常玩就行（部分需要配合自定义设置）【解码之后，驱动系统以及其他的不要动，其他的不要动】</p>
                     <p> ④：注意事项</p>
                     <p>✅ 1，卡密激活后  绑定当前系统，系统升级，重做系统，系统修改，卡密就会失效（确定系统重做好后，再激活卡密）</p>
                     <p>✅ 2，重做系统的时候，硬盘全格（有些扫盘，匹配特征码，扫到了会追加）</p>
                     <p>✅ 3，tx会定期更新，软件也会更新，建议用最新版本！</p>
                     <!-- 机器码对比图 -->
-                    <img src="https://6664321.github.io/machine_code.png" alt="游戏机器码解码前后对比">
+                    <img src="https://6664321.github.io/machine_code.png" alt="游戏机器码解码前后对比" loading="lazy">
                 </div>
                 <div class="product-btn">
-                    <button class="btn btn-detail">查看详情</button>
+                    <button class="btn btn-detail">展开/收起详情</button>
                     <button class="btn btn-buy">立即购买</button>
                 </div>
-            </div>
+            </article>
 
             <!-- 第二个商品：远程版 -->
-            <div class="product-card">
+            <article class="product-card">
                 <h3 class="product-name">人工远程版解码服务</h3>
                 <div class="product-price">¥ 70.00</div>
-                <div class="product-stock">库存：一般</div>
-                <div class="product-detail">
+                <div class="product-stock">库存：充足</div>
+                <div class="product-detail collapsed">
                     <p>✅ 时间就是金钱，不想浪费时间的大哥选这个！！</p>
                     <p>✅ 软件开发作者  【直解】  环境绝对干净！</p>
                     <p>✅ 需要重装系统</p>
@@ -378,18 +495,18 @@
                     <p>✅ 解码完，立即可玩</p>
                     <p>✅ 远程软件下载地址:https://www.todesk.com/download.html</p>
                     <!-- 用户反馈图 -->
-                    <img src="https://6664321.github.io/user_feedback.png" alt="用户解码后稳定使用反馈">
+                    <img src="https://6664321.github.io/user_feedback.png" alt="用户解码后稳定使用反馈" loading="lazy">
                 </div>
                 <div class="product-btn">
-                    <button class="btn btn-detail">查看详情</button>
+                    <button class="btn btn-detail">展开/收起详情</button>
                     <button class="btn btn-buy">立即购买</button>
                 </div>
-            </div>
+            </article>
         </div>
-    </div>
+    </section>
 
     <!-- 4. 用户信任区 -->
-    <div class="trust-section">
+    <section class="trust-section">
         <h2 class="trust-title">💯 真实效果 & 用户反馈</h2>
         <div class="trust-content">
             <div class="trust-item">
@@ -401,10 +518,10 @@
                 <p>✅ 24小时售后：购买后遇到任何问题，随时联系客服，快速解决。</p>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- 5. 购买须知区 -->
-    <div class="notice">
+    <section class="notice">
         <h2 class="notice-title">📋 购买须知</h2>
         <ul class="notice-list">
             <li>购买后请及时联系客服（底部联系方式），自解版发卡密，远程版安排技术人员协助。</li>
@@ -413,32 +530,116 @@
             <li>解码后若出现异常，24小时内联系客服免费解决</li>
             <li>禁止将解码服务用于非法用途，否则后果自负，本店不承担任何责任。</li>
         </ul>
-    </div>
+    </section>
 
     <!-- 6. 底部联系方式（固定底部） -->
-    <div class="footer">
+    <footer class="footer">
         <p>📞 客服联系方式：<span>微信AL5876CN</span>（24小时在线，秒回）</p>
-    </div>
+    </footer>
 
-    <!-- 交互JS（保留原有功能） -->
+    <!-- 交互JS -->
     <script>
-        // 查看详情按钮交互
+        // 页面加载完成后隐藏加载动画
+        window.addEventListener('DOMContentLoaded', () => {
+            const loading = document.getElementById('loading');
+            setTimeout(() => {
+                loading.classList.add('hidden');
+            }, 800);
+        });
+
+        // 查看详情按钮交互 - 折叠/展开
         const detailBtns = document.querySelectorAll('.btn-detail');
         detailBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 const detail = this.closest('.product-card').querySelector('.product-detail');
-                detail.style.display = detail.style.display === 'none' ? 'block' : 'none';
+                detail.classList.toggle('collapsed');
+                // 更新按钮文字
+                this.textContent = detail.classList.contains('collapsed') ? '展开详情' : '收起详情';
             });
-            // 默认展开详情
-            btn.closest('.product-card').querySelector('.product-detail').style.display = 'block';
+
+            // 移动端默认折叠，桌面端默认展开
+            const detail = btn.closest('.product-card').querySelector('.product-detail');
+            if (window.innerWidth > 768) {
+                detail.classList.remove('collapsed');
+                btn.textContent = '收起详情';
+            } else {
+                detail.classList.add('collapsed');
+                btn.textContent = '展开详情';
+            }
         });
 
-        // 立即购买按钮交互
+        // 窗口大小变化时调整详情状态
+        window.addEventListener('resize', () => {
+            detailBtns.forEach(btn => {
+                const detail = btn.closest('.product-card').querySelector('.product-detail');
+                if (window.innerWidth > 768) {
+                    detail.classList.remove('collapsed');
+                    btn.textContent = '收起详情';
+                } else {
+                    detail.classList.add('collapsed');
+                    btn.textContent = '展开详情';
+                }
+            });
+        });
+
+        // 立即购买按钮交互 - 增强反馈
         const buyBtns = document.querySelectorAll('.btn-buy');
         buyBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 const productName = this.closest('.product-card').querySelector('.product-name').textContent;
-                alert(`你选择了【${productName}】，请联系底部客服完成购买！`);
+                // 自定义弹窗样式（替代alert）
+                const modal = document.createElement('div');
+                modal.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: #000000dd;
+                    border: 2px solid #ff00ff;
+                    border-radius: 10px;
+                    padding: 25px;
+                    z-index: 9999;
+                    max-width: 90%;
+                    width: 400px;
+                    box-shadow: 0 0 20px #ff00ff88;
+                    text-align: center;
+                `;
+                modal.innerHTML = `
+                    <h3 style="color: #00ffff; margin-bottom: 15px;">购买确认</h3>
+                    <p style="color: #fff; margin-bottom: 20px; line-height: 1.6;">你选择了【${productName}】</p>
+                    <p style="color: #fff; margin-bottom: 20px;">请联系底部客服：<span style="color: #ff00ff; font-weight: bold;">微信AL5876CN</span> 完成购买！</p>
+                    <button id="closeModal" style="padding: 8px 20px; background: #ff00ff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">关闭</button>
+                `;
+                // 遮罩层
+                const overlay = document.createElement('div');
+                overlay.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.8);
+                    z-index: 9998;
+                `;
+                document.body.appendChild(overlay);
+                document.body.appendChild(modal);
+                document.body.style.overflow = 'hidden'; // 禁止滚动
+
+                // 关闭弹窗
+                document.getElementById('closeModal').addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                    document.body.removeChild(overlay);
+                    document.body.style.overflow = '';
+                });
+            });
+        });
+
+        // 图片加载失败处理
+        const images = document.querySelectorAll('img');
+        images.forEach(img => {
+            img.addEventListener('error', function() {
+                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzMwMCIvPjx0ZXh0IHg9IjUwIiB5PSI1MCIgZm9udC1mYW1pbHk9Ik1pY3Jvc29sYSBZYWhlaWUiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiNmZmYiIHJ4PSIyIiByeT0iMiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+5Zu+54mH5oqA5pyNPC90ZXh0Pjwvc3ZnPg==';
+                this.alt = '图片加载失败，请联系客服查看';
             });
         });
     </script>
