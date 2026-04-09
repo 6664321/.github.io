@@ -1,499 +1,446 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>游戏机器码解码 - PC游戏一键解码商城</title>
-<meta name="keywords" content="机器码解码,PC游戏解码,一键解码,远程解码">
-<meta name="description" content="专业游戏机器码解码服务，支持自助解码、人工远程协助，安全稳定，快速生效。">
-</head>
-<body>
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>一键解码商城</title>
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Microsoft YaHei", sans-serif;
-}
-
-/* ====================== 赛博朋克 动态霓虹背景 ====================== */
-body {
-    padding: 20px;
-    min-height: 100vh;
-    position: relative;
-    background: linear-gradient(-45deg, #1a0b27, #6a0dad, #ff0080, #00bfff, #1a0b27);
-    background-size: 500% 500%;
-    animation: cyberpunkBG 10s ease infinite;
-    overflow-x: hidden;
-}
-
-/* 赛博朋克渐变动画 */
-@keyframes cyberpunkBG {
-    0%   { background-position: 0% 50%; }
-    50%  { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* 霓虹光晕效果 */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 50% 50%, rgba(255, 0, 128, 0.15), rgba(106, 13, 173, 0.1) 50%, transparent 80%);
-    animation: neonGlow 6s ease-in-out infinite alternate;
-    z-index: -1;
-}
-
-@keyframes neonGlow {
-    0% { transform: scale(1); opacity: 0.4; }
-    100% { transform: scale(1.6); opacity: 0.1; }
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-}
-
-/* 商品分类区域 */
-.category-section {
-    margin-bottom: 40px;
-}
-
-.category-title {
-    font-size: 28px;
-    font-weight: bold;
-    color: #ffffff;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    text-shadow: 0 0 10px rgba(255,255,255,0.3);
-}
-
-.category-title::before {
-    content: "";
-    width: 6px;
-    height: 28px;
-    background-color: #ff0080;
-    border-radius: 3px;
-    box-shadow: 0 0 8px #ff0080;
-}
-
-.category-card {
-    background: linear-gradient(135deg, #ff0080 0%, #6a0dad 100%);
-    color: white;
-    border-radius: 16px;
-    padding: 24px;
-    max-width: 420px;
-    position: relative;
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(255,0,128,0.3);
-    border: 1px solid rgba(255,255,255,0.2);
-}
-
-.category-card.active::after {
-    content: "✓";
-    position: absolute;
-    bottom: -20px;
-    right: -20px;
-    width: 60px;
-    height: 60px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    font-weight: bold;
-}
-
-.category-name {
-    font-size: 26px;
-    font-weight: bold;
-    margin-bottom: 12px;
-}
-
-.category-count {
-    font-size: 22px;
-    opacity: 0.95;
-}
-
-/* 选择商品区域 */
-.goods-section {
-    margin-top: 30px;
-}
-
-.goods-title {
-    font-size: 28px;
-    font-weight: bold;
-    color: #ffffff;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    text-shadow: 0 0 10px rgba(255,255,255,0.3);
-}
-
-.goods-title::before {
-    content: "";
-    width: 6px;
-    height: 28px;
-    background-color: #00bfff;
-    border-radius: 3px;
-    box-shadow: 0 0 8px #00bfff;
-}
-
-.goods-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 24px;
-}
-
-.good-item {
-    border: 2px solid rgba(255,255,255,0.1);
-    border-radius: 16px;
-    padding: 28px 24px;
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(12px);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    color: #fff;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    border: 1px solid rgba(255, 0, 128, 0.2);
-}
-
-.good-item.active {
-    border-color: #ff0080;
-    background: rgba(0, 0, 0, 0.4);
-    box-shadow: 0 4px 24px rgba(255,0,128,0.4);
-}
-
-.good-item.active::after {
-    content: "✓";
-    position: absolute;
-    bottom: -15px;
-    right: -15px;
-    width: 40px;
-    height: 40px;
-    background: #ff0080;
-    color: white;
-    border-radius: 50% 0 0 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    font-weight: bold;
-    box-shadow: -2px -2px 10px rgba(255,0,128,0.5);
-}
-
-.good-name {
-    font-size: 22px;
-    font-weight: bold;
-    color: #ffffff;
-    margin-bottom: 16px;
-    line-height: 1.4;
-}
-
-.good-price {
-    font-size: 32px;
-    font-weight: bold;
-    color: #00bfff;
-    text-shadow: 0 0 8px #00bfff;
-    margin-bottom: 8px;
-}
-
-.good-stock {
-    font-size: 20px;
-    color: #00ffcc;
-    font-weight: 500;
-    margin-bottom: 12px;
-}
-
-/* 详情折叠区域 */
-.good-details {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px dashed rgba(255,255,255,0.15);
-    display: none;
-    line-height: 1.7;
-    color: #e2e8f0;
-    font-size: 15px;
-}
-
-.detail-section {
-    margin-bottom: 16px;
-}
-
-.detail-section h4 {
-    font-size: 16px;
-    color: #00bfff;
-    text-shadow: 0 0 5px #00bfff;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.detail-section ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.detail-section li {
-    padding-left: 18px;
-    position: relative;
-    margin-bottom: 6px;
-    font-size: 14px;
-    color: #cbd5e1;
-}
-
-.detail-section li::before {
-    content: "✓";
-    position: absolute;
-    left: 0;
-    color: #00ffcc;
-    font-weight: bold;
-}
-
-/* 按钮组 */
-.btn-group {
-    display: flex;
-    gap: 10px;
-    margin-top: 16px;
-    flex-wrap: wrap;
-}
-
-.detail-btn, .buy-btn {
-    flex: 1;
-    min-width: 120px;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.detail-btn {
-    background: rgba(255,255,255,0.1);
-    color: #fff;
-    border: 1px solid rgba(255,255,255,0.2);
-}
-
-.detail-btn:hover {
-    background: rgba(255,255,255,0.2);
-}
-
-.buy-btn {
-    background: #ff0080;
-    color: white;
-    box-shadow: 0 0 10px rgba(255,0,128,0.4);
-}
-
-.buy-btn:hover {
-    background: #d9006c;
-    box-shadow: 0 0 15px rgba(255,0,128,0.6);
-}
-
-/* 支付盒子 */
-.pay-box {
-    margin-top: 16px;
-    padding: 16px;
-    background: rgba(0,0,0,0.4);
-    border-radius: 12px;
-    display: none;
-    backdrop-filter: blur(6px);
-    border: 1px solid rgba(255,0,128,0.2);
-}
-
-.pay-tip {
-    font-size: 16px;
-    color: #fff;
-    text-align: center;
-    margin-bottom: 12px;
-}
-
-.pay-qrcode {
-    max-width: 260px;
-    width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto 12px;
-    border-radius: 8px;
-    object-fit: contain;
-}
-</style>
-</head>
-<body>
-
-<div class="container">
-    <!-- 商品分类 -->
-    <div class="category-section">
-        <div class="category-title">商品分类</div>
-        <div class="category-card active">
-            <div class="category-name">一键解码（支持pc所有game）</div>
-            <div class="category-count">共2种商品</div>
-        </div>
-    </div>
-
-    <!-- 商品列表 -->
-    <div class="goods-section">
-        <div class="goods-title">选择商品</div>
-        <div class="goods-list">
-
-            <!-- 商品1 -->
-            <div class="good-item active">
-                <div class="good-name">一键机器码解码【自助版】</div>
-                <div class="good-price">¥35.00</div>
-                <div class="good-stock">库存一般</div>
-
-                <!-- 商品详情（直接在卡片内） -->
-                <div class="good-details" id="details1">
-                    <div class="detail-section">
-                        <h4>✅ 商品描述</h4>
-                        <ul>
-                            <li>纯小白看不懂教程请下单70元远程包过服务</li>
-                            <li>全新版本过加密，过AC-E，过延迟,过反弹,过365/1/3/7天限制</li>
-                            <li>招代理，批量拿卡优惠，量大无手续费，联系客服Q:2761351793</li>
-                            <li>本程序为自助解码，非远程人工解码，卡密售出不退，按教程99%可解</li>
-                            <li>卡密绑定电脑，不重装可一直使用，支持所有PC端游戏机器码解除</li>
-                        </ul>
-                    </div>
-                    <div class="detail-section">
-                        <h4>📦 解码流程</h4>
-                        <ul>
-                            <li>重做系统→装驱动→禁更新→禁杀毒→装运行库→关闭内核隔离→解码软件→登录账号正常游戏</li>
-                        </ul>
-                    </div>
-                    <div class="detail-section">
-                        <h4>⚠️ 注意事项</h4>
-                        <ul>
-                            <li>卡密激活后绑定当前系统，重做/升级系统会导致卡密失效</li>
-                            <li>重做系统建议全盘格式化，避免特征码检测</li>
-                            <li>软件会持续更新，建议使用最新版本</li>
-                            <img src="https://6664321.github.io/machine_code.png" alt="游戏机器码解码前后对比" style="width: 100%; max-width: 1000px; margin: 15px 0; border-radius: 8px; border: 2px solid #ff00ff;">
-</div>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- 按钮 -->
-                <div class="btn-group">
-                    <button class="detail-btn" onclick="toggleDetails('details1', this)">查看详情</button>
-                    <button class="buy-btn" onclick="togglePay(this)">立即购买</button>
-                </div>
-
-                <!-- 支付码 -->
-                <div class="pay-box">
-                    <div class="pay-tip">请扫码支付 ¥35.00</div>
-                    <img src="qrcode.png" alt="收款码" class="pay-qrcode" onerror="this.style.display='none'">
-                    <div class="pay-tip">付款后截图联系客服:AL5876CN</div>
-                </div>
-            </div>
-
-            <!-- 商品2 -->
-            <div class="good-item">
-                <div class="good-name">人工远程解码★包过★</div>
-                <div class="good-price">¥70.00</div>
-                <div class="good-stock">库存一般</div>
-
-                <!-- 商品详情（直接在卡片内） -->
-                <div class="good-details" id="details2">
-                    <div class="detail-section">
-                        <h4>✅ 商品描述</h4>
-                        <ul>
-                            <li>时间宝贵、不想折腾直接选此项！</li>
-                            <li>开发者直解，环境绝对干净</li>
-                        </ul>
-                    </div>
-                    <div class="detail-section">
-                        <h4>📦 服务流程</h4>
-                        <ul>
-                            <li>需要重装系统</li>
-                            <li>提供远程协助+系统重装+解码环境（包成功）</li>
-                            <li>粥，瓦，l0l。。。</li>
-                            <li>包过365天/1天/3天/7天限制</li>
-                            <li>联系客服Q：2761351793</li>
-                            <li>此为技术服务</li>
-                            <li>解码完，立即可玩</li>
-                            <li>远程工具：https://www.todesk.com/download.html</li>
-                             <img src="https://6664321.github.io/user_feedback.png" alt="用户解码后稳定使用反馈" style="width: 100%; max-width: 1000px; margin: 15px 0; border-radius: 8px; border: 2px solid #00ffff;">
-</div>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- 按钮 -->
-                <div class="btn-group">
-                    <button class="detail-btn" onclick="toggleDetails('details2', this)">查看详情</button>
-                    <button class="buy-btn" onclick="togglePay(this)">立即购买</button>
-                </div>
-
-                <!-- 支付码 -->
-                <div class="pay-box">
-                    <div class="pay-tip">请扫码支付 ¥70.00</div>
-                    <img src="qrcode.png" alt="收款码" class="pay-qrcode" onerror="this.style.display='none'">
-                    <div class="pay-tip">付款后截图联系客服AL5876CN</div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<script>
-// 切换商品详情展开/收起
-function toggleDetails(detailsId, btn) {
-    const details = document.getElementById(detailsId);
-    if (details.style.display === 'block') {
-        details.style.display = 'none';
-        btn.innerText = '查看详情';
-    } else {
-        details.style.display = 'block';
-        btn.innerText = '收起详情';
-    }
-}
-
-// 切换支付码显示/隐藏
-function togglePay(btn) {
-    const payBox = btn.parentElement.nextElementSibling;
-    document.querySelectorAll('.pay-box').forEach(box => box.style.display = 'none');
-    document.querySelectorAll('.buy-btn').forEach(b => b.innerText = '立即购买');
-    
-    if (payBox.style.display !== 'block') {
-        payBox.style.display = 'block';
-        btn.innerText = '收起付款码';
-    }
-}
-
-// 商品选中
-document.querySelectorAll('.good-item').forEach(item => {
-    item.addEventListener('click', function(e) {
-        if (!e.target.classList.contains('detail-btn') && !e.target.classList.contains('buy-btn')) {
-            document.querySelectorAll('.good-item').forEach(i => i.classList.remove('active'));
-            this.classList.add('active');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏机器码解码 - PC游戏一键解码自助/远程服务商城</title>
+    <meta name="keywords" content="机器码解码,PC游戏解码,一键解码,远程解码,游戏机器码解除,游戏破解,机器码解除">
+    <meta name="description" content="专业游戏机器码解码服务，支持全PC游戏自助一键解码、人工远程协助，安全稳定，快速生效，包过重装系统。">
+    <meta name="robots" content="index,follow">
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", "Consolas", sans-serif;
         }
-    });
-});
-</script>
 
-</body>
-</html>
+        /* 赛博朋克背景+全局样式 */
+        body {
+            background: linear-gradient(135deg, #1a002e, #00083b, #1a002e);
+            color: #ffffff;
+            min-height: 100vh;
+            padding-bottom: 80px; /* 给底部联系方式留空间 */
+            position: relative;
+            overflow-x: hidden;
+        }
 
+        /* 动态背景动画 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 500%;
+            height: 500%;
+            background: radial-gradient(circle at center, #ff00ff33, #00ffff33, transparent 70%);
+            animation: cyberpunkBG 30s linear infinite;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes cyberpunkBG {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* 1. 顶部视觉头图区 */
+        .banner {
+            width: 100%;
+            padding: 40px 20px;
+            text-align: center;
+            background: linear-gradient(90deg, #110022, #001133);
+            border-bottom: 3px solid #ff00ff;
+            box-shadow: 0 0 20px #ff00ff55;
+            margin-bottom: 30px;
+        }
+
+        .banner h1 {
+            font-size: 2.5rem;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #ff00ff;
+            margin-bottom: 10px;
+        }
+
+        .banner p {
+            font-size: 1.2rem;
+            color: #ffffff;
+            opacity: 0.8;
+        }
+
+        /* 2. 核心服务简介区 */
+        .intro {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 20px;
+            background: #00000088;
+            border-radius: 10px;
+            border: 2px solid #00ffff;
+            box-shadow: 0 0 15px #00ffff55;
+        }
+
+        .intro p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        /* 3. 商品展示区（核心板块） */
+        .product-container {
+            max-width: 1200px;
+            margin: 0 auto 50px;
+            padding: 0 20px;
+        }
+
+        .product-title {
+            text-align: center;
+            font-size: 2rem;
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #ff00ff;
+            padding-bottom: 10px;
+            display: inline-block;
+            margin-left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: #00000099;
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #ff00ff;
+            box-shadow: 0 0 20px #ff00ff44;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px #ff00ff88;
+        }
+
+        .product-name {
+            font-size: 1.5rem;
+            color: #00ffff;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #00ffff;
+            padding-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            color: #ff00ff;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .product-stock {
+            color: #00ff00;
+            margin-bottom: 20px;
+        }
+
+        .product-detail {
+            margin: 20px 0;
+            line-height: 1.8;
+            color: #ffffffdd;
+        }
+
+        .product-detail img {
+            width: 100%;
+            max-width: 1000px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 2px solid #ff00ff;
+            box-shadow: 0 0 15px #ff00ff55;
+        }
+
+        /* 第二个商品图片样式区分 */
+        .product-list > div:nth-child(2) .product-detail img {
+            border-color: #00ffff;
+            box-shadow: 0 0 15px #00ffff55;
+        }
+
+        .product-btn {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-detail {
+            background: #00ffff;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .btn-detail:hover {
+            background: #00cccc;
+            box-shadow: 0 0 10px #00ffff;
+        }
+
+        .btn-buy {
+            background: #ff00ff;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .btn-buy:hover {
+            background: #cc00cc;
+            box-shadow: 0 0 10px #ff00ff;
+        }
+
+        /* 4. 用户信任区 */
+        .trust-section {
+            max-width: 1200px;
+            margin: 0 auto 50px;
+            padding: 0 20px;
+        }
+
+        .trust-title {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+            margin-bottom: 25px;
+        }
+
+        .trust-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 20px;
+        }
+
+        .trust-item {
+            background: #00000088;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #00ffff;
+        }
+
+        .trust-item p {
+            margin-bottom: 15px;
+            color: #ffffffdd;
+            line-height: 1.6;
+        }
+
+        /* 5. 购买须知区 */
+        .notice {
+            max-width: 1200px;
+            margin: 0 auto 50px;
+            padding: 25px;
+            background: #00000088;
+            border-radius: 10px;
+            border: 2px solid #ff00ff;
+            box-shadow: 0 0 15px #ff00ff44;
+        }
+
+        .notice-title {
+            font-size: 1.8rem;
+            color: #ff00ff;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 8px #ff00ff;
+        }
+
+        .notice-list {
+            list-style: none;
+            line-height: 2;
+            color: #ffffffdd;
+        }
+
+        .notice-list li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .notice-list li::before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+            color: #00ff00;
+        }
+
+        /* 6. 底部联系方式（固定底部） */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #000000dd;
+            padding: 15px 20px;
+            border-top: 2px solid #00ffff;
+            text-align: center;
+            z-index: 999;
+        }
+
+        .footer p {
+            color: #ffffff;
+            font-size: 1.1rem;
+        }
+
+        .footer span {
+            color: #ff00ff;
+            font-weight: bold;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .banner h1 {
+                font-size: 1.8rem;
+            }
+            .product-list {
+                grid-template-columns: 1fr;
+            }
+            .trust-content {
+                grid-template-columns: 1fr;
+            }
+            .product-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 1. 顶部视觉头图区 -->
+    <div class="banner">
+        <h1>🔥 游戏机器码解码服务 🔥</h1>
+        <p>全PC游戏一键解码 | 人工远程协助 | 稳定不翻车 </p>
+    </div>
+
+    <!-- 2. 核心服务简介区 -->
+    <div class="intro">
+        <p>专业解决各类PC游戏机器码限制问题，自解版35元一键解码无需人工，远程版70元一对一协助包成功，解码后一直稳定，已服务上千用户，口碑保障！</p>
+    </div>
+
+    <!-- 3. 商品展示区（核心板块） -->
+    <div class="product-container">
+        <h2 class="product-title">🎮 核心服务套餐</h2>
+        <div class="product-list">
+            <!-- 第一个商品：自解版 -->
+            <div class="product-card">
+                <h3 class="product-name">自解版解码服务</h3>
+                <div class="product-price">¥ 35.00</div>
+                <div class="product-stock">库存：一般</div>
+                <div class="product-detail">
+                    <p>✅ （有详细视频教程）只提供软件和卡密（通解所有pc-游戏）【静态和动态码自己可调】</p>
+                    <p>✅ 纯小白，如果解码流程和视频一点都看不明白，下单旁边的70【客服远程包过】。
+自解失败的【补差价】联系旁边的代解客服</p>
+                    <p>✅ 【招代理，批量拿卡优惠已开启】</p>
+                    <p> ①：本程序为自助解码 非远程人工﻿解码 (卡密售出不退，确认需要后购买)，只保证卡密正确,按照视频教程解码,百分之99都可以解除！</p>
+                    <p> ②：卡密绑定电脑不重装一直可以用，必须重装分区后使用，支持所有电脑PC端的Game，支持任何电脑都可以解除机器码</p>
+                    <p>✅ 【全新版本过加密，过AC-E，过延迟,过反弹,过365/1/3/7,1小时，1分钟，数据异常】</p>
+                    <p> ③：解码流程：</p>
+                    <p>✅ 重做系统，装驱动，禁更新，禁杀du，装库，关闭内核隔离，然后登录解码软件解码，解码成功，装软件，登录账号正常玩就行（部分需要配合自定义设置）【解码之后，驱动系统以及其他的不要动，其他的不要动】</p>
+                    <p> ④：注意事项</p>
+                    <p>✅ 1，卡密激活后  绑定当前系统，系统升级，重做系统，系统修改，卡密就会失效（确定系统重做好后，再激活卡密）</p>
+                    <p>✅ 2，重做系统的时候，硬盘全格（有些扫盘，匹配特征码，扫到了会追加）</p>
+                    <p>✅ 3，tx会定期更新，软件也会更新，建议用最新版本！</p>
+                    <!-- 机器码对比图 -->
+                    <img src="https://6664321.github.io/machine_code.png" alt="游戏机器码解码前后对比">
+                </div>
+                <div class="product-btn">
+                    <button class="btn btn-detail">查看详情</button>
+                    <button class="btn btn-buy">立即购买</button>
+                </div>
+            </div>
+
+            <!-- 第二个商品：远程版 -->
+            <div class="product-card">
+                <h3 class="product-name">人工远程版解码服务</h3>
+                <div class="product-price">¥ 70.00</div>
+                <div class="product-stock">库存：一般</div>
+                <div class="product-detail">
+                    <p>✅ 时间就是金钱，不想浪费时间的大哥选这个！！</p>
+                    <p>✅ 软件开发作者  【直解】  环境绝对干净！</p>
+                    <p>✅ 需要重装系统</p>
+                    <p>✅ 提供远程+重装系统+环境解码（包成功）</p>
+                    <p>✅ 粥，瓦，l0l。。。</p>
+                    <p>✅ 包过，包过365，1，3，7</p>
+                    <p>✅ 此为技术服务</p>
+                    <p>✅ 解码完，立即可玩</p>
+                    <p>✅ 远程软件下载地址:https://www.todesk.com/download.html</p>
+                    <!-- 用户反馈图 -->
+                    <img src="https://6664321.github.io/user_feedback.png" alt="用户解码后稳定使用反馈">
+                </div>
+                <div class="product-btn">
+                    <button class="btn btn-detail">查看详情</button>
+                    <button class="btn btn-buy">立即购买</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. 用户信任区 -->
+    <div class="trust-section">
+        <h2 class="trust-title">💯 真实效果 & 用户反馈</h2>
+        <div class="trust-content">
+            <div class="trust-item">
+                <p>✅ 解码成功率100%：针对所有PC游戏机器码限制，解码后彻底解除限制，无反弹、无封号风险。</p>
+                <p>✅ 稳定使用周期长：多数用户解码后稳定使用2个月以上，最长可达8个月，全程技术售后保障。</p>
+            </div>
+            <div class="trust-item">
+                <p>✅ 上千用户验证：累计服务1000+游戏玩家，好评率99%，无差评、无纠纷，口碑看得见。</p>
+                <p>✅ 24小时售后：购买后遇到任何问题，随时联系客服，快速解决。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. 购买须知区 -->
+    <div class="notice">
+        <h2 class="notice-title">📋 购买须知</h2>
+        <ul class="notice-list">
+            <li>购买后请及时联系客服（底部联系方式），自解版发卡密，远程版安排技术人员协助。</li>
+            <li>解码前请关闭杀毒软件/防火墙，避免工具被误杀，影响解码效果。</li>
+            <li>重装系统后，自解版可凭卡密激活，远程版可协助解码一次。</li>
+            <li>解码后若出现异常，24小时内联系客服免费解决</li>
+            <li>禁止将解码服务用于非法用途，否则后果自负，本店不承担任何责任。</li>
+        </ul>
+    </div>
+
+    <!-- 6. 底部联系方式（固定底部） -->
+    <div class="footer">
+        <p>📞 客服联系方式：<span>微信AL5876CN</span>（24小时在线，秒回）</p>
+    </div>
+
+    <!-- 交互JS（保留原有功能） -->
+    <script>
+        // 查看详情按钮交互
+        const detailBtns = document.querySelectorAll('.btn-detail');
+        detailBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const detail = this.closest('.product-card').querySelector('.product-detail');
+                detail.style.display = detail.style.display === 'none' ? 'block' : 'none';
+            });
+            // 默认展开详情
+            btn.closest('.product-card').querySelector('.product-detail').style.display = 'block';
+        });
+
+        // 立即购买按钮交互
+        const buyBtns = document.querySelectorAll('.btn-buy');
+        buyBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const productName = this.closest('.product-card').querySelector('.product-name').textContent;
+                alert(`你选择了【${productName}】，请联系底部客服完成购买！`);
+            });
+        });
+    </script>
 </body>
 </html>
