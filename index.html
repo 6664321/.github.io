@@ -481,6 +481,15 @@
             color: #000;
             font-weight: bold;
         }
+        /* 收款码样式 */
+        .wechat-pay-code {
+            width: 200px;
+            height: 200px;
+            margin: 10px auto 20px;
+            border: 2px solid #00ff00;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #00ff0055;
+        }
     </style>
 </head>
 <body>
@@ -649,7 +658,9 @@
                 payModal.innerHTML = `
                     <h3 class="modal-title">💴 付款引导</h3>
                     <p class="modal-desc">你选择了【${productName}】，价格：¥${productPrice}</p>
-                    <p class="modal-desc">请联系客服完成付款：<br><span style="color: #ff00ff; font-weight: bold;">微信AL5876CN</span></p>
+                    <p class="modal-desc">请扫描下方微信收款码完成付款：</p>
+                    <!-- 微信收款码图片 - 替换为实际收款码地址 -->
+                    <img src="https://6664321.github.io/wechat_pay_code.png" alt="微信收款码" class="wechat-pay-code">
                     <p class="modal-desc">付款完成后点击下方"确认付款"按钮，查看商品详情！</p>
                     <div>
                         <button class="modal-btn cancel-pay">取消</button>
@@ -708,8 +719,13 @@
         const images = document.querySelectorAll('img');
         images.forEach(img => {
             img.addEventListener('error', function() {
-                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzMwMCIvPjx0ZXh0IHg9IjUwIiB5PSI1MCIgZm9udC1mYW1pbHk9Ik1pY3Jvc29sYSBZYWhlaWUiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiNmZmYiIHJ4PSIyIiByeT0iMiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+5Zu+54mH5oqA5pyNPC90ZXh0Pjwvc3ZnPg==';
-                this.alt = '图片加载失败，请联系客服查看';
+                if (this.classList.contains('wechat-pay-code')) {
+                    this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzMwMCIvPjx0ZXh0IHg9IjEwMCIgeT0iMTAwIiBmb250LWZhbWlseT0iTWljcm9zb2xhIFlhaGVpIiBmb250LXNpemU9IjE0IiBmaWxsPSJ3aGl0ZSIgcng9IjMiIHJ5PSIzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7nlLXorr7nlYfkuYvnlLXmsJHorr7nlYfvvIk8L3RleHQ+PC9zdmc+';
+                    this.alt = '微信收款码加载失败，请联系客服AL5876CN获取收款码';
+                } else {
+                    this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzMwMCIvPjx0ZXh0IHg9IjUwIiB5PSI1MCIgZm9udC1mYW1pbHk9Ik1pY3Jvc29sYSBZYWhlaWUiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiNmZmYiIHJ4PSIyIiByeT0iMiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+5Zu+54mH5oqA5pyNPC90ZXh0Pjwvc3ZnPg==';
+                    this.alt = '图片加载失败，请联系客服查看';
+                }
             });
         });
     </script>
